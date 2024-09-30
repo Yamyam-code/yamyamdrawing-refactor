@@ -20,7 +20,6 @@
     </header>
     <div id="main_display">
         <aside class="tools">
-                <div class="tools_flex">
                     <button id="drawing" class="tool">
                         🖊
                         <span class="tooltip">Pen(Q)</span>
@@ -53,12 +52,9 @@
                         🗑
                         <span class="tooltip">Delete(delete)</span>
                     </button>
-                </div>
-            <div class='files tools_flex'>
                 <input type="file" accept="imange/*" id='file'/>
-                <label for="file">📂</label>
-                <button id="save">💾</button>
-            </div>
+                <label for="file" class="flex_end">📂</label>
+                <button id="save" class="flex_end">💾</button>
         </aside>
         <main>
             <canvas></canvas>

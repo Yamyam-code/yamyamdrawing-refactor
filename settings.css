@@ -3,11 +3,17 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
+  gap: 150px;
+
   background-color: rgba(23, 23, 23, 1);
-  width: 14rem;
+  width: 12rem;
   height: 100%;
+
+  padding-top: 50px;
+
+  box-sizing: border-box;
 }
 
 .container {
@@ -73,7 +79,7 @@
 }
 
 input[type='range'] {
-  width: 90%;
+  width: 85%;
 }
 
 .range_tool {
@@ -85,9 +91,11 @@ input[type='range'] {
   .tools_sett {
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    gap: 30px;
     width: 100%;
     height: auto;
-    padding: 10px 0;
+    padding: 10px 30px;
   }
 
   .container {

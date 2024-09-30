@@ -6,12 +6,10 @@ const color = document.getElementById('text_color');
 const backColor = document.getElementById('background_color');
 const resetBtn = document.getElementById('reset');
 const inputImage = document.getElementById('file');
-const text = document.getElementById('text');
 const save = document.getElementById('save');
 const drawing = document.getElementById('drawing');
 const eraser = document.getElementById('eraser');
 const brush = document.getElementById('brush');
-const fontList = document.getElementById('font_lists');
 const returnButton = document.getElementById('return_button');
 const square = document.getElementById('square');
 const triangle = document.getElementById('triangle');
@@ -27,27 +25,48 @@ cPushArray.splice(0, cPushArray.length);
 let cStep = -1;
 
 let isPainting = false;
-let isDrawing = false;
-let isBrushing = false;
-let issquare = false;
-let isTriangle = false;
-let isCircle = false;
-let isErasing = false;
+
+const settings = {
+  isDrawing: false,
+  isBrushing: false,
+  isSquare: false,
+  isTriangle: false,
+  isCircle: false,
+  isErasing: false,
+};
+
+function settingsChange(setting, name) {
+  for (const key in settings) {
+    if (key === setting && settings[key] === false) {
+      settings[key] = true;
+    } else {
+      settings[key] = false;
+    }
+  }
+  const tools = document.querySelectorAll('.tool');
+  tools.forEach((tool) => {
+    if (tool.id === name) {
+      tool.style.backgroundColor = 'gray';
+    } else {
+      tool.style.backgroundColor = '#171717';
+    }
+  });
+}
 
 onReset();
 
 function onMouseMove(event) {
-  if (isPainting && isErasing) {
+  if (isPainting && settings.isErasing) {
     ctx.save();
     ctx.strokeStyle = backColor.value;
     ctx.lineWidth = lineWidth.value * 3;
     ctx.lineTo(event.offsetX, event.offsetY);
     ctx.stroke();
     ctx.restore();
-  } else if (isPainting && isDrawing) {
+  } else if (isPainting && settings.isDrawing) {
     ctx.lineTo(event.offsetX, event.offsetY);
     ctx.stroke();
-  } else if (isPainting && isBrushing) {
+  } else if (isPainting && settings.isBrushing) {
     ctx.save();
     function distanceBetween(point1, point2) {
       return Math.sqrt(
@@ -83,17 +102,17 @@ function onMouseDown(event) {
   lastPoint = { x: event.offsetX, y: event.offsetY };
 
   if (
-    isDrawing ||
-    isErasing ||
-    isBrushing ||
-    issquare ||
-    isTriangle ||
-    isCircle
+    settings.isDrawing ||
+    settings.isErasing ||
+    settings.isBrushing ||
+    settings.isSquare ||
+    settings.isTriangle ||
+    settings.isCircle
   ) {
     cStep++;
     cPushArray.push(canvas.toDataURL());
   }
-  if (issquare) {
+  if (settings.isSquare) {
     const LineWidth = ctx.lineWidth * 20;
     ctx.rect(
       event.offsetX - LineWidth / 2,
@@ -102,7 +121,7 @@ function onMouseDown(event) {
       LineWidth
     );
     ctx.stroke();
-  } else if (isTriangle) {
+  } else if (settings.isTriangle) {
     const LineWidth = ctx.lineWidth * 20;
     const start = ((LineWidth / 2) * Math.sqrt(3)) / 20;
     const high = (LineWidth * Math.sqrt(3)) / 2;
@@ -118,7 +137,7 @@ function onMouseDown(event) {
     );
     ctx.lineTo(event.offsetX, event.offsetY + start + LineWidth / 4);
     ctx.stroke();
-  } else if (isCircle) {
+  } else if (settings.isCircle) {
     const LineWidth = ctx.lineWidth * 10;
     ctx.beginPath();
     ctx.arc(event.offsetX, event.offsetY, LineWidth, 0, 2 * Math.PI, false);
@@ -175,140 +194,12 @@ function onImg(event) {
   };
 }
 
-function onDouble(event) {
-  ctx.save();
-  const inputText = text.value;
-  ctx.lineWidth = 1;
-  ctx.fillText(inputText, event.offsetX, event.offsetY);
-  ctx.restore();
-}
-
 function onSave() {
   const url = canvas.toDataURL();
   const a = document.createElement('a');
   a.href = url;
   a.download = 'Art.png';
   a.click();
-}
-
-function onDraw() {
-  if (!isDrawing) {
-    isDrawing = true;
-    isBrushing = false;
-    isErasing = false;
-    issquare = false;
-    isTriangle = false;
-    isCircle = false;
-    drawing.style.backgroundColor = 'gray';
-    circle.style.backgroundColor = '#171717';
-    triangle.style.backgroundColor = '#171717';
-    brush.style.backgroundColor = '#171717';
-    eraser.style.backgroundColor = '#171717';
-    square.style.backgroundColor = '#171717';
-  } else {
-    isDrawing = false;
-    drawing.style.backgroundColor = '#171717';
-  }
-}
-
-function onErase() {
-  if (!isErasing) {
-    isErasing = true;
-    isDrawing = false;
-    isBrushing = false;
-    issquare = false;
-    isTriangle = false;
-    isCircle = false;
-    eraser.style.backgroundColor = 'gray';
-    circle.style.backgroundColor = '#171717';
-    triangle.style.backgroundColor = '#171717';
-    brush.style.backgroundColor = '#171717';
-    drawing.style.backgroundColor = '#171717';
-    square.style.backgroundColor = '#171717';
-  } else {
-    isErasing = false;
-    eraser.style.backgroundColor = '#171717';
-  }
-}
-
-function onBrush() {
-  if (!isBrushing) {
-    isBrushing = true;
-    isErasing = false;
-    isDrawing = false;
-    issquare = false;
-    isTriangle = false;
-    isCircle = false;
-    brush.style.backgroundColor = 'gray';
-    circle.style.backgroundColor = '#171717';
-    triangle.style.backgroundColor = '#171717';
-    eraser.style.backgroundColor = '#171717';
-    drawing.style.backgroundColor = '#171717';
-    square.style.backgroundColor = '#171717';
-  } else {
-    isBrushing = false;
-    brush.style.backgroundColor = '#171717';
-  }
-}
-
-function onSquare() {
-  if (!issquare) {
-    issquare = true;
-    isBrushing = false;
-    isErasing = false;
-    isDrawing = false;
-    isTriangle = false;
-    isCircle = false;
-    square.style.backgroundColor = 'gray';
-    circle.style.backgroundColor = '#171717';
-    brush.style.backgroundColor = '#171717';
-    eraser.style.backgroundColor = '#171717';
-    drawing.style.backgroundColor = '#171717';
-    triangle.style.backgroundColor = '#171717';
-  } else {
-    issquare = false;
-    square.style.backgroundColor = '#171717';
-  }
-}
-
-function onTriangle() {
-  if (!isTriangle) {
-    isTriangle = true;
-    issquare = false;
-    isBrushing = false;
-    isErasing = false;
-    isDrawing = false;
-    isCircle = false;
-    triangle.style.backgroundColor = 'gray';
-    circle.style.backgroundColor = '#171717';
-    square.style.backgroundColor = '#171717';
-    brush.style.backgroundColor = '#171717';
-    eraser.style.backgroundColor = '#171717';
-    drawing.style.backgroundColor = '#171717';
-  } else {
-    isTriangle = false;
-    triangle.style.backgroundColor = '#171717';
-  }
-}
-
-function onCircle() {
-  if (!isCircle) {
-    isCircle = true;
-    isTriangle = false;
-    issquare = false;
-    isBrushing = false;
-    isErasing = false;
-    isDrawing = false;
-    circle.style.backgroundColor = 'gray';
-    triangle.style.backgroundColor = '#171717';
-    square.style.backgroundColor = '#171717';
-    brush.style.backgroundColor = '#171717';
-    eraser.style.backgroundColor = '#171717';
-    drawing.style.backgroundColor = '#171717';
-  } else {
-    isCircle = false;
-    circle.style.backgroundColor = '#171717';
-  }
 }
 
 function onReturn() {
@@ -327,22 +218,22 @@ function onReturn() {
 function onKeyboard(event) {
   switch (event.keyCode) {
     case 81:
-      onDraw();
+      settingsChange('isDrawing', 'drawing');
       break;
     case 87:
-      onBrush();
+      settingsChange('isBrushing', 'brush');
       break;
     case 69:
-      onErase();
+      settingsChange('isErasing', 'eraser');
       break;
     case 65:
-      onSquare();
+      settingsChange('isSquare', 'square');
       break;
     case 83:
-      onTriangle();
+      settingsChange('isTriangle', 'triangle');
       break;
     case 68:
-      onCircle();
+      settingsChange('isCircle', 'circle');
       break;
     case 17 && 90:
       onReturn();
@@ -356,7 +247,10 @@ function onKeyboard(event) {
 canvas.addEventListener('mousemove', onMouseMove);
 canvas.addEventListener('mousedown', onMouseDown);
 addEventListener('mouseup', onMouseUp);
-canvas.addEventListener('touchmove', onMouseMove);
+canvas.addEventListener('touchmove', (event) => {
+  event.preventDefault();
+  onMouseMove(event);
+});
 canvas.addEventListener('touchdown', onMouseDown);
 addEventListener('touchup', onMouseUp);
 lineWidth.addEventListener('change', lineWidthChange);
@@ -364,13 +258,24 @@ color.addEventListener('change', onColorChange);
 backColor.addEventListener('change', onBColorChange);
 resetBtn.addEventListener('click', onDelete);
 inputImage.addEventListener('change', onImg);
-canvas.addEventListener('dblclick', onDouble);
 save.addEventListener('click', onSave);
-drawing.addEventListener('click', onDraw);
-eraser.addEventListener('click', onErase);
-brush.addEventListener('click', onBrush);
+drawing.addEventListener('click', () => {
+  settingsChange('isDrawing', 'drawing');
+});
+brush.addEventListener('click', () => {
+  settingsChange('isBrushing', 'brush');
+});
+eraser.addEventListener('click', () => {
+  settingsChange('isErasing', 'eraser');
+});
+square.addEventListener('click', () => {
+  settingsChange('isSquare', 'square');
+});
+triangle.addEventListener('click', () => {
+  settingsChange('isTriangle', 'triangle');
+});
+circle.addEventListener('click', () => {
+  settingsChange('isCircle', 'circle');
+});
 returnButton.addEventListener('click', onReturn);
-square.addEventListener('click', onSquare);
-triangle.addEventListener('click', onTriangle);
-circle.addEventListener('click', onCircle);
 addEventListener('keydown', onKeyboard);

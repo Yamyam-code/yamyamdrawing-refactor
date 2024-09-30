@@ -5,17 +5,12 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   background-color: rgba(23, 23, 23, 1);
 
   box-sizing: border-box;
-}
-
-.tools_flex {
-  display: flex;
-  flex-direction: column;
 }
 
 .tool {
@@ -58,6 +53,10 @@
   cursor: pointer;
 }
 
+.flex_end {
+  justify-self: flex-end;
+}
+
 label[for='file'] {
   width: 2rem;
   height: 2rem;
@@ -77,12 +76,6 @@ label[for='file'] {
   cursor: pointer;
 }
 
-.files {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-}
-
 @media (max-width: 800px) {
   .tools {
     width: 100%;
@@ -96,8 +89,7 @@ label[for='file'] {
   .tool,
   #save,
   label[for='file'] {
-    width: 3rem;
-    height: 3rem;
+    flex: 1;
   }
 
   .tools_flex {
