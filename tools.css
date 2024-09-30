@@ -93,6 +93,13 @@ label[for='file'] {
     text-align: center;
   }
 
+  .tool,
+  #save,
+  label[for='file'] {
+    width: 3rem;
+    height: 3rem;
+  }
+
   .tools_flex {
     flex-direction: row;
   }
