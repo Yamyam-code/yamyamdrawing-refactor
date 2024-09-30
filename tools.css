@@ -9,7 +9,6 @@
   align-items: center;
   text-align: center;
   background-color: rgba(23, 23, 23, 1);
-  border-right: 0.08rem solid black;
 
   box-sizing: border-box;
 }
@@ -92,8 +91,6 @@ label[for='file'] {
     justify-content: center;
     align-items: center;
     text-align: center;
-
-    border-right: none;
   }
 
   .tools_flex {

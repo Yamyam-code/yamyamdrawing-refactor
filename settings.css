@@ -1,4 +1,6 @@
 .tools_sett {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -6,7 +8,6 @@
   background-color: rgba(23, 23, 23, 1);
   width: 14rem;
   height: 100%;
-  border-left: 0.08rem solid black;
 }
 
 .container {
@@ -21,6 +22,7 @@
   font-size: 1.2rem;
   cursor: pointer;
   color: rgb(181, 181, 181);
+  line-height: 1.5;
 }
 
 #text_color,
@@ -29,8 +31,8 @@
   -moz-appearance: none;
   appearance: none;
   background-color: transparent;
-  width: 6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 5rem;
   border: none;
   cursor: pointer;
 }
@@ -60,20 +62,6 @@
   text-align: center;
 }
 
-#canvas_range {
-  color: rgb(181, 181, 181);
-  font-size: 1.2rem;
-  height: 2rem;
-}
-
-#canvas_range > input[type='text'] {
-  margin-left: 0.8rem;
-  margin-right: 0.8rem;
-  width: 2.8rem;
-  height: 1.2rem;
-  font-size: 1.2rem;
-}
-
 #size_box {
   width: 100%;
   height: 2rem;
@@ -93,57 +81,12 @@ input[type='range'] {
   color: rgb(181, 181, 181);
 }
 
-#text_tool {
-  width: 100%;
-  height: 2rem;
-  justify-content: center;
-  text-align: center;
-}
-
-#text {
-  position: relative;
-  margin-left: 1.04rem;
-  height: 1.2rem;
-  width: 10rem;
-  margin-top: 2rem;
-  left: 0.2rem;
-  border: 0.2rem solid rgb(181, 181, 181);
-}
-
-#font_button {
-  position: relative;
-  cursor: pointer;
-  height: 1.2rem;
-  width: 1.2rem;
-  right: 1.4rem;
-}
-
-#font_lists {
-  width: 14rem;
-  height: 8rem;
-  display: none;
-}
-
-.font_list {
-  margin-left: 1.72rem;
-  width: 10.4rem;
-  height: 2rem;
-  font-size: 1.2rem;
-  background-color: rgb(201, 201, 201);
-  border: 0.12rem solid black;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
 @media (max-width: 800px) {
   .tools_sett {
     flex-direction: row;
     justify-content: center;
     width: 100%;
     height: auto;
-    border-left: none;
   }
 
   .container {

@@ -1,4 +1,5 @@
 const canvas = document.querySelector('canvas');
+const main = document.querySelector('main');
 const ctx = canvas.getContext('2d');
 const lineWidth = document.getElementById('line_width');
 const color = document.getElementById('text_color');
@@ -10,25 +11,15 @@ const save = document.getElementById('save');
 const drawing = document.getElementById('drawing');
 const eraser = document.getElementById('eraser');
 const brush = document.getElementById('brush');
-const fontButton = document.getElementById('font_button');
-const textDisplay = document.getElementById('text_tool');
 const fontList = document.getElementById('font_lists');
-const sansF = document.getElementById('sans_font');
-const monoF = document.getElementById('mono_font');
-const serifF = document.getElementById('serif_font');
-const malangF = document.getElementById('malang_font');
 const returnButton = document.getElementById('return_button');
-const canvasWidth = document.getElementById('canvas_width');
-const canvasHeight = document.getElementById('canvas_height');
 const square = document.getElementById('square');
 const triangle = document.getElementById('triangle');
 const circle = document.getElementById('circle');
-canvas.width = canvasWidth.value;
-canvas.height = canvasHeight.value;
+canvas.width = main.offsetWidth;
+canvas.height = main.offsetHeight;
 ctx.lineWidth = lineWidth.value;
 
-let myFont = 'serif';
-ctx.font = lineWidth.value * 10 + 'px ' + myFont;
 ctx.lineCap = 'round';
 
 let cPushArray = new Array();
@@ -42,14 +33,8 @@ let issquare = false;
 let isTriangle = false;
 let isCircle = false;
 let isErasing = false;
-let isFontList = false;
 
 onReset();
-
-const MalangF = new FontFace('MalangF', 'url(GeekbleMalang2OTF.otf)');
-MalangF.load().then(function (font) {
-  document.fonts.add(font);
-});
 
 function onMouseMove(event) {
   if (isPainting && isErasing) {
@@ -96,6 +81,7 @@ function onMouseMove(event) {
 function onMouseDown(event) {
   isPainting = true;
   lastPoint = { x: event.offsetX, y: event.offsetY };
+
   if (
     isDrawing ||
     isErasing ||
@@ -146,9 +132,7 @@ function onMouseUp() {
 }
 
 function lineWidthChange(event) {
-  let fontSize = event.target.value * 10;
   ctx.lineWidth = event.target.value;
-  ctx.font = fontSize + 'px ' + myFont;
 }
 
 function onColorChange(event) {
@@ -327,42 +311,6 @@ function onCircle() {
   }
 }
 
-function onFontList() {
-  if (!isFontList) {
-    textDisplay.style.height = '250px';
-    fontList.style.display = 'block';
-    isFontList = true;
-  } else if (isFontList) {
-    textDisplay.style.height = '50px';
-    fontList.style.display = 'none';
-    isFontList = false;
-  }
-}
-
-function onSans() {
-  myFont = 'sans-serif';
-  ctx.font = lineWidth.value * 10 + 'px ' + myFont;
-  return myFont;
-}
-
-function onMono() {
-  myFont = 'monospace';
-  ctx.font = lineWidth.value * 10 + 'px ' + myFont;
-  return myFont;
-}
-
-function onSerif() {
-  myFont = 'serif';
-  ctx.font = lineWidth.value * 10 + 'px ' + myFont;
-  return myFont;
-}
-
-function onMalang() {
-  myFont = 'MalangF';
-  ctx.font = lineWidth.value * 10 + 'px ' + myFont;
-  return myFont;
-}
-
 function onReturn() {
   if (cStep >= 0) {
     const img = new Image();
@@ -374,42 +322,6 @@ function onReturn() {
       cPushArray.pop();
     };
   }
-}
-
-function onWidthChange(event) {
-  if (!isNaN(event.target.value)) {
-    if (event.target.value <= 1400) {
-      canvas.width = event.target.value;
-      canvas.style.width = event.target.value + 'px';
-    } else {
-      alert('1400이하의 숫자만 입력 가능합니다!');
-      event.target.value = 1000;
-      canvas.style.width = event.target.value + 'px';
-    }
-  } else {
-    alert('1400이하의 숫자만 입력 가능합니다!');
-    event.target.value = 1000;
-    canvas.style.width = event.target.value + 'px';
-  }
-  onReset();
-}
-
-function onHeightChange(event) {
-  if (!isNaN(event.target.value)) {
-    if (event.target.value <= 900) {
-      canvas.height = event.target.value;
-      canvas.style.height = event.target.value + 'px';
-    } else {
-      alert('900이하의 숫자만 입력 가능합니다!');
-      event.target.value = 900;
-      canvas.style.height = event.target.value + 'px';
-    }
-  } else {
-    alert('900이하의 숫자만 입력 가능합니다!');
-    event.target.value = 900;
-    canvas.style.height = event.target.value + 'px';
-  }
-  onReset();
 }
 
 function onKeyboard(event) {
@@ -454,14 +366,7 @@ save.addEventListener('click', onSave);
 drawing.addEventListener('click', onDraw);
 eraser.addEventListener('click', onErase);
 brush.addEventListener('click', onBrush);
-fontButton.addEventListener('click', onFontList);
-sansF.addEventListener('click', onSans);
-monoF.addEventListener('click', onMono);
-serifF.addEventListener('click', onSerif);
-malangF.addEventListener('click', onMalang);
 returnButton.addEventListener('click', onReturn);
-canvasWidth.addEventListener('change', onWidthChange);
-canvasHeight.addEventListener('change', onHeightChange);
 square.addEventListener('click', onSquare);
 triangle.addEventListener('click', onTriangle);
 circle.addEventListener('click', onCircle);
