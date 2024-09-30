@@ -35,6 +35,15 @@ const settings = {
   isErasing: false,
 };
 
+function touchXY(event) {
+  const offset = event.target.getBoundingClientRect();
+  const XY = {
+    offsetX: event.touches[0].clientX - offset.x,
+    offsetY: event.touches[0].clientY - offset.y,
+  };
+  return XY;
+}
+
 function settingsChange(setting, name) {
   for (const key in settings) {
     if (key === setting && settings[key] === false) {
@@ -249,11 +258,11 @@ canvas.addEventListener('mousedown', onMouseDown);
 addEventListener('mouseup', onMouseUp);
 canvas.addEventListener('touchmove', (event) => {
   event.preventDefault();
-  onMouseMove(event);
+  onMouseMove(touchXY(event));
 });
 canvas.addEventListener('touchstart', (event) => {
   event.preventDefault();
-  onMouseDown(event);
+  onMouseDown(touchXY(event));
 });
 addEventListener('touchend', (event) => {
   event.preventDefault();
