@@ -34,12 +34,6 @@ li {
   color: rgb(181, 181, 181);
 }
 
-#yamlogo_mob {
-  position: absolute;
-  left: 0;
-  display: none;
-}
-
 #main_display {
   display: flex;
   /* flex-direction: column; */
@@ -78,7 +72,7 @@ canvas {
 
 @media (max-width: 800px) {
   html {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   #header {
@@ -89,7 +83,7 @@ canvas {
     flex-direction: column;
   }
 
-  #yamlogo_mob {
-    display: block;
+  #yamsign {
+    display: none;
   }
 }
