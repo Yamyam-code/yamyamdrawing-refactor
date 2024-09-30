@@ -257,10 +257,10 @@ canvas.addEventListener('mousemove', onMouseMove);
 canvas.addEventListener('mousedown', onMouseDown);
 addEventListener('mouseup', onMouseUp);
 canvas.addEventListener('touchmove', (event) => {
+  event.preventDefault();
   onMouseMove(touchXY(event));
 });
 canvas.addEventListener('touchstart', (event) => {
-  event.preventDefault();
   onMouseDown(touchXY(event));
 });
 addEventListener('touchend', onMouseUp());
