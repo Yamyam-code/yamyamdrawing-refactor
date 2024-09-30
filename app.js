@@ -251,11 +251,11 @@ canvas.addEventListener('touchmove', (event) => {
   event.preventDefault();
   onMouseMove(event);
 });
-canvas.addEventListener('touchdown', (event) => {
+canvas.addEventListener('touchstart', (event) => {
   event.preventDefault();
   onMouseDown(event);
 });
-addEventListener('touchup', (event) => {
+addEventListener('touchend', (event) => {
   event.preventDefault();
   onMouseUp();
 });
