@@ -356,6 +356,9 @@ function onKeyboard(event) {
 canvas.addEventListener('mousemove', onMouseMove);
 canvas.addEventListener('mousedown', onMouseDown);
 addEventListener('mouseup', onMouseUp);
+canvas.addEventListener('touchmove', onMouseMove);
+canvas.addEventListener('touchdown', onMouseDown);
+addEventListener('touchup', onMouseUp);
 lineWidth.addEventListener('change', lineWidthChange);
 color.addEventListener('change', onColorChange);
 backColor.addEventListener('change', onBColorChange);
