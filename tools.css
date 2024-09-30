@@ -1,0 +1,106 @@
+.tools {
+  position: relative;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(23, 23, 23, 1);
+  border-right: 0.08rem solid black;
+
+  box-sizing: border-box;
+}
+
+.tools_flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.tool {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  background-color: rgba(23, 23, 23, 1);
+  transition: all 0.1s ease-in-out;
+  text-align: center;
+  position: relative;
+
+  box-sizing: border-box;
+}
+
+.tool:hover {
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+.tooltip {
+  position: absolute;
+  left: 2.1rem;
+  top: 0.24rem;
+  padding: 0.2rem;
+  font-size: 0.8rem;
+  border-radius: 0.4rem;
+  color: rgba(23, 23, 23, 1);
+  background-color: rgba(201, 201, 201, 1);
+  opacity: 0;
+}
+
+.tool:hover .tooltip {
+  opacity: 1;
+}
+
+#file {
+  display: none;
+  cursor: pointer;
+}
+
+label[for='file'] {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(23, 23, 23, 1);
+  cursor: pointer;
+}
+
+#save {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1rem;
+  background-color: rgba(23, 23, 23, 1);
+  border: none;
+  cursor: pointer;
+}
+
+.files {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .tools {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    border-right: none;
+  }
+
+  .tools_flex {
+    flex-direction: row;
+  }
+
+  .files {
+    flex-direction: row;
+  }
+}

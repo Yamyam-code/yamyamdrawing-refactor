@@ -1,0 +1,95 @@
+@import 'reset.css';
+
+html {
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  list-style: none;
+}
+
+#header {
+  background-color: rgba(23, 23, 23, 1);
+  height: 1.2rem;
+  border-bottom: 0.08rem solid black;
+  display: flex;
+}
+
+.yamlogo {
+  width: 5.2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: bold;
+  color: rgb(181, 181, 181);
+}
+
+#yamlogo_mob {
+  position: absolute;
+  left: 0;
+  display: none;
+}
+
+#main_display {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(75, 73, 73, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  width: 32rem;
+  height: 32rem;
+  background-color: white;
+  border: 0.2rem solid black;
+}
+
+#yamsign {
+  font-size: 0.6rem;
+  color: rgb(181, 181, 181);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 800px) {
+  html {
+    font-size: 20px;
+  }
+
+  #header {
+    display: none;
+  }
+
+  #main_display {
+    flex-direction: column;
+  }
+
+  #yamlogo_mob {
+    display: block;
+  }
+}

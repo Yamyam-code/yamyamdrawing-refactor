@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="yamyamIcon.png">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"
+    />
+    <link rel="stylesheet" href="style_em.css">
+    <link rel="stylesheet" href="tools.css">
+    <link rel="stylesheet" href="settings.css">
+    <title>yamyamdrawing</title>
+</head>
+<body>
+    <header id="header">
+        <p class="yamlogo">yamyamdrawing</p>
+    </header>
+    <div id="main_display">
+        <aside class="tools">
+            <p class="yamlogo" id="yamlogo_mob">yamyamdrawing</p>
+                <div class="tools_flex">
+                    <button id="drawing" class="tool">
+                        🖊
+                        <span class="tooltip">Pen(Q)</span>
+                    </button>
+                    <button id="brush" class="tool">
+                        🖌
+                        <span class="tooltip">Brush(W)</span>
+                    </button>
+                    <button id="eraser" class="tool">
+                        ✏
+                        <span class="tooltip">Eraser(E)</span>
+                    </button>
+                    <button id="square" class="tool">
+                        □
+                        <span class="tooltip">Squre(A)</span>
+                    </button>
+                    <button id="triangle" class="tool">
+                        △
+                        <span class="tooltip">Triangle(S)</span>
+                    </button>
+                    <button id="circle" class="tool">
+                        O
+                        <span class="tooltip">Circle(D)</span>
+                    </button>
+                    <button id="return_button" class="tool">
+                        ↩
+                        <span class="tooltip">Undo(Crtl+Z)</span>
+                    </button>
+                    <button id="reset" class="tool">
+                        🗑
+                        <span class="tooltip">Delete(delete)</span>
+                    </button>
+                </div>
+            <div class='files tools_flex'>
+                <input type="file" accept="imange/*" id='file'/>
+                <label for="file">📂</label>
+                <button id="save">💾</button>
+            </div>
+        </aside>
+        <main>
+            <canvas></canvas>
+        </main>
+        <aside class="tools_sett">
+            <div class="container">
+                <div class="column">
+                    <input type="color" id="text_color" />
+                    <label for="color" class="color_tool">color</label>
+                </div>
+                <div class="column">
+                    <input type="color" id="background_color" value="#ffffff"/>
+                    <label for="background_color" class="color_tool">backgroundcolor</label>
+                </div>
+            </div>
+            <div class='ranges'>
+                <!-- <div id="canvas_range">
+                    <input type="text" id="canvas_width" value="800">
+                    X
+                    <input type="text" id="canvas_height" value="800">
+                    <label for="canvas_range" class="range_tool">Canvas</label>
+                </div> -->
+                    <div id="size_box"><input type="range" id="line_width" min="1" max="10" value="5" step="0.1"/>
+                    <label for="line_width" class="range_tool">size</label></div>
+            </div>
+            <!-- <div id='text_tool'>
+                <input type="text" placeholder="  double click on canvas" id="text" />
+                <label for="text" id='font_button'>▼</label>
+                <ul id='font_lists'>
+                    <li class='font_list' id='sans_font'>sans-serif</li>
+                    <li class='font_list' id='mono_font'>monospace</li>
+                    <li class='font_list' id='serif_font'>serif</li>
+                    <li class='font_list' id='malang_font'>malang</li>
+                </ul>
+            </div> -->
+            <div id="yamsign">@yamyamssi</p>
+            </aside>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
