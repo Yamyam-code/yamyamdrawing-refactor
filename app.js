@@ -251,8 +251,14 @@ canvas.addEventListener('touchmove', (event) => {
   event.preventDefault();
   onMouseMove(event);
 });
-canvas.addEventListener('touchdown', onMouseDown);
-addEventListener('touchup', onMouseUp);
+canvas.addEventListener('touchdown', (event) => {
+  event.preventDefault();
+  onMouseDown(event);
+});
+addEventListener('touchup', (event) => {
+  event.preventDefault();
+  onMouseUp();
+});
 lineWidth.addEventListener('change', lineWidthChange);
 color.addEventListener('change', onColorChange);
 backColor.addEventListener('change', onBColorChange);
