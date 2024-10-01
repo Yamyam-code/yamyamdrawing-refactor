@@ -30,13 +30,15 @@ ctx.lineWidth = lineWidth.value;
 
 ctx.lineCap = 'round';
 
-let lastPoint;
-
 let cPushArray = new Array();
 cPushArray.splice(0, cPushArray.length);
 let cStep = { current: -1 };
 
+let lastPoint;
 let isPainting = false;
+let isKeyDown = false;
+
+onReset(ctx, canvas, cPushArray, backColor, cStep);
 
 const settings = {
   isDrawing: false,
@@ -46,8 +48,6 @@ const settings = {
   isCircle: false,
   isErasing: false,
 };
-
-onReset(ctx, canvas, cPushArray, backColor, cStep);
 
 function onMouseMove(event) {
   if (isPainting && settings.isErasing) {
@@ -137,6 +137,7 @@ function onMouseUp() {
 }
 
 function onKeyboard(event) {
+  console.log(event.keyCode);
   switch (event.keyCode) {
     case 81:
       settingsChange(settings, 'isDrawing', 'drawing');
@@ -217,4 +218,12 @@ inputImage.addEventListener('change', (event) => {
 });
 save.addEventListener('click', onSave);
 
-addEventListener('keydown', onKeyboard);
+addEventListener('keydown', (event) => {
+  if (!isKeyDown) {
+    isKeyDown = true;
+    onKeyboard(event);
+  }
+});
+addEventListener('keyup', () => {
+  isKeyDown = false;
+});
