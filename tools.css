@@ -10,19 +10,20 @@
   text-align: center;
   background-color: rgba(23, 23, 23, 1);
 
+  overflow: hidden;
   box-sizing: border-box;
 }
 
 .tool {
   width: 2rem;
-  height: 2rem;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   color: white;
   cursor: pointer;
   background-color: rgba(23, 23, 23, 1);
   transition: all 0.1s ease-in-out;
   text-align: center;
   position: relative;
+  padding: 0.6em 0.4em;
 
   box-sizing: border-box;
 }
@@ -54,26 +55,32 @@
 }
 
 .flex_end {
-  justify-self: flex-end;
-}
-
-label[for='file'] {
   width: 2rem;
-  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(23, 23, 23, 1);
   cursor: pointer;
+  font-size: 1rem;
+  padding: 0.48em 0.32em;
 }
 
 #save {
-  width: 2rem;
-  height: 2rem;
-  font-size: 1rem;
-  background-color: rgba(23, 23, 23, 1);
   border: none;
   cursor: pointer;
+}
+
+.files {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+}
+
+.rotate {
+  transform: rotate(270deg);
 }
 
 @media (max-width: 800px) {
@@ -86,17 +93,34 @@ label[for='file'] {
     text-align: center;
   }
 
+  button {
+    border: 0;
+  }
+
   .tool,
   #save,
   label[for='file'] {
+    /* width: 10%;
+    height: 10%; */
     flex: 1;
+  }
+
+  .tooltip {
+    display: none;
   }
 
   .tools_flex {
     flex-direction: row;
   }
 
+  .tool:hover {
+    transform: scale(1);
+    z-index: 1;
+  }
+
   .files {
+    position: relative;
     flex-direction: row;
+    flex: 2;
   }
 }

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="style_em.css">
     <link rel="stylesheet" href="tools.css">
     <link rel="stylesheet" href="settings.css">
+    <script src="https://kit.fontawesome.com/c1b11bbbbc.js" crossorigin="anonymous"></script>
     <title>yamyamdrawing</title>
 </head>
 <body>
@@ -21,40 +22,42 @@
     <div id="main_display">
         <aside class="tools">
                     <button id="drawing" class="tool">
-                        🖊
+                        <i class="fa-solid fa-pen-nib"></i>
                         <span class="tooltip">Pen(Q)</span>
                     </button>
                     <button id="brush" class="tool">
-                        🖌
+                        <i class="fa-solid fa-brush"></i>
                         <span class="tooltip">Brush(W)</span>
                     </button>
                     <button id="eraser" class="tool">
-                        ✏
+                        <i class="fa-solid fa-eraser"></i>
                         <span class="tooltip">Eraser(E)</span>
                     </button>
                     <button id="square" class="tool">
-                        □
+                        <i class="fa-solid fa-square"></i>
                         <span class="tooltip">Squre(A)</span>
                     </button>
                     <button id="triangle" class="tool">
-                        △
+                        <i class="fa-solid fa-play rotate"></i>
                         <span class="tooltip">Triangle(S)</span>
                     </button>
                     <button id="circle" class="tool">
-                        O
+                        <i class="fa-solid fa-circle"></i>
                         <span class="tooltip">Circle(D)</span>
                     </button>
                     <button id="return_button" class="tool">
-                        ↩
+                        <i class="fa-solid fa-rotate-left"></i>
                         <span class="tooltip">Undo(Crtl+Z)</span>
                     </button>
                     <button id="reset" class="tool">
-                        🗑
+                        <i class="fa-solid fa-trash-can"></i>
                         <span class="tooltip">Delete(delete)</span>
                     </button>
-                <input type="file" accept="imange/*" id='file'/>
-                <label for="file" class="flex_end">📂</label>
-                <button id="save" class="flex_end">💾</button>
+                    <div class="files">
+                        <input type="file" accept="imange/*" id='file'/>
+                        <label for="file" class="flex_end">📂</label>
+                        <button id="save" class="flex_end">💾</button>
+                    </div>
         </aside>
         <main>
             <canvas></canvas>
