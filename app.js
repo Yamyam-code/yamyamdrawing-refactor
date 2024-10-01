@@ -1,3 +1,13 @@
+import { onDelete, onImg, onReset, onReturn, onSave } from './js/buttonFunc.js';
+import {
+  angleBetween,
+  distanceBetween,
+  lineWidthChange,
+  onBColorChange,
+  onColorChange,
+  settingsChange,
+} from './js/utils.js';
+
 const canvas = document.querySelector('canvas');
 const main = document.querySelector('main');
 const ctx = canvas.getContext('2d');
@@ -20,9 +30,11 @@ ctx.lineWidth = lineWidth.value;
 
 ctx.lineCap = 'round';
 
+let lastPoint;
+
 let cPushArray = new Array();
 cPushArray.splice(0, cPushArray.length);
-let cStep = -1;
+let cStep = { current: -1 };
 
 let isPainting = false;
 
@@ -35,34 +47,7 @@ const settings = {
   isErasing: false,
 };
 
-function touchXY(event) {
-  const offset = event.target.getBoundingClientRect();
-  const XY = {
-    offsetX: event.touches[0].clientX - offset.x,
-    offsetY: event.touches[0].clientY - offset.y,
-  };
-  return XY;
-}
-
-function settingsChange(setting, name) {
-  for (const key in settings) {
-    if (key === setting && settings[key] === false) {
-      settings[key] = true;
-    } else {
-      settings[key] = false;
-    }
-  }
-  const tools = document.querySelectorAll('.tool');
-  tools.forEach((tool) => {
-    if (tool.id === name) {
-      tool.style.backgroundColor = 'gray';
-    } else {
-      tool.style.backgroundColor = '#171717';
-    }
-  });
-}
-
-onReset();
+onReset(ctx, canvas, cPushArray, backColor, cStep);
 
 function onMouseMove(event) {
   if (isPainting && settings.isErasing) {
@@ -77,23 +62,15 @@ function onMouseMove(event) {
     ctx.stroke();
   } else if (isPainting && settings.isBrushing) {
     ctx.save();
-    function distanceBetween(point1, point2) {
-      return Math.sqrt(
-        Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2)
-      );
-    }
-    function angleBetween(point1, point2) {
-      return Math.atan2(point2.x - point1.x, point2.y - point1.y);
-    }
     ctx.globalAlpha = '0.02';
     ctx.lineWidth = 0;
     ctx.globalCompositeOperation = 'source-over';
-    var currentPoint = { x: event.offsetX, y: event.offsetY };
-    var dist = distanceBetween(lastPoint, currentPoint);
-    var angle = angleBetween(lastPoint, currentPoint);
-    for (var i = 0; i < dist; i += 3) {
-      x = event.offsetX + Math.sin(angle) * i - 25;
-      y = event.offsetY + Math.cos(angle) * i - 25;
+    let currentPoint = { x: event.offsetX, y: event.offsetY };
+    let dist = distanceBetween(lastPoint, currentPoint);
+    let angle = angleBetween(lastPoint, currentPoint);
+    for (let i = 0; i < dist; i += 3) {
+      const x = event.offsetX + Math.sin(angle) * i - 25;
+      const y = event.offsetY + Math.cos(angle) * i - 25;
       ctx.beginPath();
       ctx.arc(x + 25, y + 25, lineWidth.value * 5, false, Math.PI * 2, false);
       ctx.closePath();
@@ -118,7 +95,7 @@ function onMouseDown(event) {
     settings.isTriangle ||
     settings.isCircle
   ) {
-    cStep++;
+    cStep.current++;
     cPushArray.push(canvas.toDataURL());
   }
   if (settings.isSquare) {
@@ -159,96 +136,31 @@ function onMouseUp() {
   ctx.beginPath();
 }
 
-function lineWidthChange(event) {
-  ctx.lineWidth = event.target.value;
-}
-
-function onColorChange(event) {
-  ctx.strokeStyle = event.target.value;
-  ctx.fillStyle = event.target.value;
-}
-
-function onBColorChange(event) {
-  ctx.save();
-  ctx.fillStyle = event.target.value;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.restore();
-}
-
-function onReset() {
-  ctx.save();
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.restore();
-  backColor.value = '#ffffff';
-  cPushArray.splice(0, cPushArray.length);
-  cStep = -1;
-}
-
-function onDelete() {
-  let tf = confirm('내용을 삭제하시겠습니까?');
-  if (tf) {
-    onReset();
-  }
-}
-
-function onImg(event) {
-  const files = event.target.files[0];
-  const url = URL.createObjectURL(files);
-  const img = new Image();
-  img.src = url;
-  img.onload = function () {
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    inputImage.value = null;
-  };
-}
-
-function onSave() {
-  const url = canvas.toDataURL();
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'Art.png';
-  a.click();
-}
-
-function onReturn() {
-  if (cStep >= 0) {
-    const img = new Image();
-    const url = cPushArray[cStep];
-    img.src = url;
-    img.onload = function () {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      cStep--;
-      cPushArray.pop();
-    };
-  }
-}
-
 function onKeyboard(event) {
   switch (event.keyCode) {
     case 81:
-      settingsChange('isDrawing', 'drawing');
+      settingsChange(settings, 'isDrawing', 'drawing');
       break;
     case 87:
-      settingsChange('isBrushing', 'brush');
+      settingsChange(settings, 'isBrushing', 'brush');
       break;
     case 69:
-      settingsChange('isErasing', 'eraser');
+      settingsChange(settings, 'isErasing', 'eraser');
       break;
     case 65:
-      settingsChange('isSquare', 'square');
+      settingsChange(settings, 'isSquare', 'square');
       break;
     case 83:
-      settingsChange('isTriangle', 'triangle');
+      settingsChange(settings, 'isTriangle', 'triangle');
       break;
     case 68:
-      settingsChange('isCircle', 'circle');
+      settingsChange(settings, 'isCircle', 'circle');
       break;
     case 17 && 90:
-      onReturn();
+      onReturn(cPushArray, cStep, ctx, canvas);
       break;
     case 46:
-      onDelete();
+      onDelete(ctx, canvas, cPushArray, backColor, cStep);
       break;
   }
 }
@@ -263,13 +175,18 @@ canvas.addEventListener('touchmove', (event) => {
 canvas.addEventListener('touchstart', (event) => {
   onMouseDown(touchXY(event));
 });
-addEventListener('touchend', onMouseUp());
-lineWidth.addEventListener('change', lineWidthChange);
-color.addEventListener('change', onColorChange);
-backColor.addEventListener('change', onBColorChange);
-resetBtn.addEventListener('click', onDelete);
-inputImage.addEventListener('change', onImg);
-save.addEventListener('click', onSave);
+addEventListener('touchend', onMouseUp);
+
+lineWidth.addEventListener('change', (event) => {
+  lineWidthChange(event, ctx);
+});
+color.addEventListener('change', (event) => {
+  onColorChange(event, ctx);
+});
+backColor.addEventListener('change', (event) => {
+  onBColorChange(event, ctx);
+});
+
 drawing.addEventListener('click', () => {
   settingsChange('isDrawing', 'drawing');
 });
@@ -288,5 +205,16 @@ triangle.addEventListener('click', () => {
 circle.addEventListener('click', () => {
   settingsChange('isCircle', 'circle');
 });
-returnButton.addEventListener('click', onReturn);
+returnButton.addEventListener('click', () => {
+  onReturn(cPushArray, cStep, ctx, canvas);
+});
+resetBtn.addEventListener('click', () => {
+  onDelete(ctx, canvas, cPushArray, backColor, cStep);
+});
+
+inputImage.addEventListener('change', (event) => {
+  onImg(event, ctx, inputImage, canvas);
+});
+save.addEventListener('click', onSave);
+
 addEventListener('keydown', onKeyboard);
