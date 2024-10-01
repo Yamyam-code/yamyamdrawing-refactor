@@ -24,11 +24,14 @@ const returnButton = document.getElementById('return_button');
 const square = document.getElementById('square');
 const triangle = document.getElementById('triangle');
 const circle = document.getElementById('circle');
-canvas.width = main.offsetWidth;
-canvas.height = main.offsetHeight;
-ctx.lineWidth = lineWidth.value;
 
-ctx.lineCap = 'round';
+function windowSizeChange() {
+  canvas.width = main.offsetWidth;
+  canvas.height = main.offsetHeight;
+  ctx.lineWidth = lineWidth.value;
+  ctx.lineCap = 'round';
+}
+windowSizeChange();
 
 let cPushArray = new Array();
 cPushArray.splice(0, cPushArray.length);
@@ -219,7 +222,7 @@ inputImage.addEventListener('change', (event) => {
 save.addEventListener('click', onSave);
 
 addEventListener('keydown', (event) => {
-  if (!isKeyDown) {
+  if (!isKeyDown || event.keyCode === 17) {
     isKeyDown = true;
     onKeyboard(event);
   }
@@ -227,3 +230,4 @@ addEventListener('keydown', (event) => {
 addEventListener('keyup', () => {
   isKeyDown = false;
 });
+addEventListener('resize', windowSizeChange);
